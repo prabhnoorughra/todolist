@@ -1,0 +1,354 @@
+/* 1. Use a more-intuitive box-sizing model */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* 2. Remove default margin */
+* {
+  margin: 0;
+}
+
+/* 3. Enable keyword animations */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    interpolate-size: allow-keywords;
+  }
+}
+
+body {
+  /* 4. Add accessible line-height */
+  line-height: 1.5;
+  /* 5. Improve text rendering */
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 6. Improve media defaults */
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* 7. Inherit fonts for form controls */
+input, button, textarea, select {
+  font: inherit;
+}
+
+/* 8. Avoid text overflows */
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+
+/* 9. Improve line wrapping */
+p {
+  text-wrap: pretty;
+}
+h1, h2, h3, h4, h5, h6 {
+  text-wrap: balance;
+}
+
+/*
+  10. Create a root stacking context
+*/
+#root, #__next {
+  isolation: isolate;
+}
+
+/* start */
+
+:root, body {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+
+body {
+    height: 100vh;
+    width: 100vw;
+    background-color: rgb(0, 170, 255);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.main {
+    width: 60vw;
+    height: 80vh;
+    display: grid;
+    grid-template-columns: 0.3fr 1fr;
+    grid-template-rows: 0.12fr 1fr;
+    border-radius: 7px;
+    box-shadow: 0 0 15px black;
+    overflow: hidden;
+}
+
+header {
+    background-color: rgb(234, 102, 240);
+    grid-column: 1 / -1;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    font-weight: bold;
+    color: white;
+}
+
+.sidebar {
+    padding-top: 10px;
+    background-color: rgb(230, 224, 224);
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+    border-bottom-left-radius: 7px;
+}
+
+.todocontainer {
+    background-color: white;
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+}
+
+.todolistdisplay {
+    background-color: white;
+    padding: 20px;
+    margin-top: 3%;
+    border-bottom-right-radius: 7px;
+    display: grid;
+    grid-template-rows: repeat(auto-fit, 60px);
+    gap: 10px;
+    overflow: auto;
+    height: 90%;
+    width: 85%;
+}
+
+.projectheader {
+    padding-left: 10px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    border-bottom: 1px solid black;
+}
+
+.projects {
+    height: 70%;
+    overflow: auto;
+    margin-bottom: 100px;
+}
+
+.addtask {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: white;
+    background-color: green;
+    font-size: 1.2rem;
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+.addtask:hover {
+    cursor: pointer;
+}
+
+.project {
+    padding: 10px;
+}
+
+.project:hover {
+    cursor: pointer;
+    background-color: yellow;
+}
+
+.project:active {
+    background-color: pink;
+}
+
+.project.active {
+    background-color: pink;
+}
+
+#addproject {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    color: white;
+    background-color: blue;
+    font-size: 1.2rem;
+}
+
+#addproject:hover {
+    cursor: pointer;
+}
+
+dialog {
+    margin: auto;
+}
+
+.emptycontainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    margin: auto;
+    width: 100%;
+    height: 100%;
+    padding-top: 100px;
+}
+
+.emptylist {
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+.emptydeletebtn {
+    margin-top: 20px;
+    font-size: 1.5rem;
+    padding: 15px;
+    color: white;
+    background-color: red;
+}
+
+.emptydeletebtn:hover {
+    cursor: pointer;
+}
+
+.task {
+    position: relative;
+    padding: 10px;
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 3fr 2fr 3fr;
+    align-items: center;
+    background-color: rgb(219, 217, 217);
+    height: 60px;
+    font-size: 1rem;
+}
+
+.checkboxcontainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 5px;
+}
+
+.checkbox {
+    margin-left: 5px;
+}
+
+.titletaskdisplay {
+    text-align: center;
+}
+
+.buttoncontainer {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.buttoncontainer > button {
+    background-color: pink;
+    border: 2px solid white;
+    border-radius: 3px;
+}
+
+.buttoncontainer > button:hover {
+    cursor: pointer;
+}
+
+div.low, div.medium, div.high {
+    grid-row: 1 / -1;
+    width: 5px;
+    height: 60px;
+    position: absolute;
+    
+}
+
+div.low {
+    background-color: green;
+}
+
+div.high {
+    background-color: red;
+}
+
+div.medium {
+    background-color: yellow;
+}
+
+div.completed {
+    background-color: aqua;
+}
+
+form#taskform, #projectform, form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.duedate, .tasktitle, .taskdescription, .priority {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+input[type="text"], input[type="date"], .priorityoptions {
+    width: 200px;
+}
+
+
+.priorityoptions {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
+}
+
+.prioritycontainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+}
+
+
+dialog#taskmodal, #projectmodal, dialog {
+    background-color: rgb(0, 170, 255);
+}
+
+dialog#detailmodal {
+    background-color: rgb(0, 170, 255);
+    text-align: center;
+}
+
+
+
+.details {
+    color: pink;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: start;
+    gap: 30px;
+      text-shadow:
+    /* top-left */     -1px -1px 0 black,
+    /* top-right */     1px -1px 0 black,
+    /* bottom-left */  -1px  1px 0 black,
+    /* bottom-right */  1px  1px 0 black;
+    font-size: 1.5rem;
+}
+
+button.detailclose {
+    margin-top: 30px;
+    color: black;
+    background-color: yellow;
+    font-size: 1.2rem;
+}
+
+button.detailclose:hover {
+    cursor: pointer;
+}
