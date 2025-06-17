@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo</title>
+<script defer src="main.js"></script></head>
+<body>
+    <div class="main">
+        <header>To-Do!</header>
+        <div class="sidebar">
+            <div class="projectheader">Projects</div>
+            <div class="projects"></div>
+            <button id="addproject">Add Project</button>
+        </div>
+        <div class="todocontainer">
+            <div class="todolistdisplay"></div>
+        </div>
+    </div>
+    <dialog id="taskmodal">
+        <form method="dialog" id="taskform">
+            <div class="tasktitle">
+                <label for="title">Title:</label>
+                <input required type="text" name="title" id="title">
+            </div>
+            <div class="taskdescription">
+                <label for="descriptiontaskform">Description:</label>
+                <input required type="text" name="description" id="descriptiontaskform">
+            </div>
+            <div class="duedate">
+                <label for="duedate">Due Date:</label>
+                <input required type="date" name="duedate" id="duedate">
+            </div>
+            <div class="priority">
+                <div class="priorityheader">Priority:</div>
+                <div class="priorityoptions">
+                    <div class="prioritycontainer">
+                        <label for="low">Low</label>
+                        <input required type="radio" name="priority" id="low" value="Low">
+                    </div>
+                    <div class="prioritycontainer">
+                        <label for="medium">Medium</label>
+                        <input type="radio" name="priority" id="medium" value="Medium">
+                    </div>
+                    <div class="prioritycontainer">
+                        <label for="high">High</label>
+                        <input type="radio" name="priority" id="high" value="High">
+                    </div>
+                </div>
+            </div>
+            <div class="taskmodalbuttons">
+                <button type="submit" id="tasksubmit">Confirm</button>
+                <button type="button" id="canceltask">Cancel</button>
+            </div>
+        </form>
+    </dialog>
+    <dialog id="projectmodal">
+        <form method="dialog" id="projectform">
+            <div class="projectitle">
+                <label for="title">Title</label>
+                <input required type="text" name="title" id="title">
+            </div>
+            <div class="projectmodalbuttons">
+                <button type="submit" id="projectsubmit">Confirm</button>
+                <button type="button" id="cancelproject">Cancel</button>
+            </div>
+        </form>
+    </dialog>
+    <dialog id="editmodal">
+        <form method="dialog" id="editform">
+            <div class="tasktitle">
+                <label for="edittitle">Title</label>
+                <input required type="text" name="title" id="edittitle">
+            </div>
+            <div class="taskdescription">
+                <label for="editdescription">Description</label>
+                <input required type="text" name="description" id="editdescription">
+            </div>
+            <div class="duedate">
+                <label for="editduedate">Due Date</label>
+                <input required type="date" name="duedate" id="editduedate">
+            </div>
+            <div class="priority">
+                <div class="priorityheader">Priority:</div>
+                <div class="priorityoptions">
+                    <div class="prioritycontainer">
+                        <label for="low">Low</label>
+                        <input required type="radio" name="priority" id="editLow" value="Low">
+                    </div>
+                    <div class="prioritycontainer">
+                        <label for="medium">Medium</label>
+                        <input required type="radio" name="priority" id="editMedium" value="Medium">
+                    </div>
+                    <div class="prioritycontainer">
+                        <label for="low">High</label>
+                        <input required type="radio" name="priority" id="editHigh" value="High">
+                    </div>
+                </div>
+            </div>
+            <div class="taskmodalbuttons">
+                <button type="submit" id="editsubmit">Confirm</button>
+                <button type="button" id="editcancel">Cancel</button>
+            </div>
+        </form>
+    </dialog>
+    <dialog id="detailmodal">
+    </dialog>
+    <dialog id="emptymodal">
+    </dialog>
+    <div class="modalcontainer"></div>
+</body>
+</html>
