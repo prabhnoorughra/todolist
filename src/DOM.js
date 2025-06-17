@@ -1,6 +1,7 @@
 import { ToDo } from "./todos";
 import { Projects } from "./projects";
 import { format, parseISO } from "date-fns";
+import { saveToStorage } from "./storagehandler";
 
 export function loadList(list, projects) { //ran to initialize and display between lists we have stored under projects
     const projectNodes = document.querySelectorAll(".project");
@@ -19,6 +20,8 @@ export function loadList(list, projects) { //ran to initialize and display betwe
 
     const parent = document.querySelector(".todolistdisplay");
     parent.replaceChildren();
+
+
      //intializing funcitonality for adding tasks to the list
     const modal = document.querySelector("#taskmodal");
     const addTask = document.createElement("button");
@@ -56,6 +59,7 @@ export function loadList(list, projects) { //ran to initialize and display betwe
         list.addToList(task);
         modal.close();
         displayList(list, addTask, projects); //display updated list with same button functionality
+        saveToStorage(projects);
     });
 
     const parentcontainer = document.querySelector(".todocontainer");
@@ -89,6 +93,7 @@ export function loadList(list, projects) { //ran to initialize and display betwe
 
             //need to remove it from projects obj then redisplay everything
             projects.deleteProject(list.id);
+            saveToStorage(projects);
             
         });
         emptycontainer.appendChild(empty);
@@ -153,6 +158,7 @@ function displayList(list, addbtn, projects) {
             } else {
                 itemnode.classList.remove("completed");
             }
+            saveToStorage(projects);
         });
 
         const title = document.createElement("div");
@@ -170,6 +176,7 @@ function displayList(list, addbtn, projects) {
         deleteTask.textContent = "Delete";
         deleteTask.addEventListener("click", () => {
             list.removeFromList(item.id);
+            saveToStorage(projects);
             loadList(list, projects);
         });
 
@@ -250,20 +257,12 @@ function makeEditForm(item, list, projects) {
     const modal = document.querySelector("#emptymodal");
     const form = document.querySelector("#editform");
 
-/*     const titleInput = document.querySelector("#edittitle");
-    const descriptionInput = document.querySelector("#editdescription");
-    const dueDateInput = document.querySelector("#editduedate"); */
-
-/*     titleInput.setAttribute("value", item.title);
-    descriptionInput.setAttribute("value", item.description);
-    dueDateInput.setAttribute("value", item.dueDate); */
-
 
     const newForm = form.cloneNode(true);
     const newModal = modal.cloneNode(true);
     modalcontainer.appendChild(newModal);
     newModal.appendChild(newForm);
-    //form.replaceWith(newForm);
+
     const radiotoedit = "#edit" + item.priority;
     const radioInput = newForm.querySelector(radiotoedit);
     const titleInput = newForm.querySelector("#edittitle");
@@ -276,7 +275,7 @@ function makeEditForm(item, list, projects) {
     radioInput.checked = true;
 
     const canceledit = newForm.querySelector("#editcancel");
-    canceledit.addEventListener("click", () => { //might have to clone cancel btn
+    canceledit.addEventListener("click", () => {
         newModal.close();
     });
 
@@ -291,6 +290,7 @@ function makeEditForm(item, list, projects) {
 
         newModal.close();
         loadList(list, projects);
+        saveToStorage(projects);
     });
     return newModal;
 

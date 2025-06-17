@@ -1,8 +1,9 @@
 import "./styles.css"
-import { loadList } from "./DOM"
+import { displayProjects, loadList } from "./DOM"
 import { ToDo } from "./todos"
 import { List } from "./lists"
 import { Projects } from "./projects";
+import { loadProjectsFromStorage, saveToStorage } from "./storagehandler";
 
 
 
@@ -11,9 +12,10 @@ console.log("Yo!");
 /* const defaultList = new List("Default");
 loadList(defaultList); */
 
-const projectlist = new Projects();
-projectlist.addProject("Home");
+const projectlist = loadProjectsFromStorage(); //new
+//projectlist.addProject("Home");
 console.log(projectlist);
+displayProjects(projectlist);
 loadList(projectlist.projects[0], projectlist);
 
 const addProject = document.querySelector("#addproject");
@@ -40,6 +42,7 @@ pform.addEventListener("submit", (e) => {
     projectlist.addProject(data.get("title"));
     dialog.close();
     loadList(projectlist.projects[projectlist.projects.length - 1], projectlist);
+    saveToStorage(projectlist);
 });
 
 

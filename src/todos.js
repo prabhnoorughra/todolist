@@ -56,30 +56,6 @@ export class ToDo {
         duedatenode.textContent = pretty;
 
         prioritynode.textContent = this.priority;
-/* 
-        titledetailcontainer.appendChild(titletitle);
-        titledetailcontainer.appendChild(titlenode);
-
-        descriptiondetailcontainer.appendChild(descriptiontitle);
-        descriptiondetailcontainer.appendChild(descriptionnode);
-
-
-        duedatedetailcontainer.appendChild(duedatetitle);
-        duedatedetailcontainer.appendChild(duedatenode);
-
-
-        prioritydetailcontainer.appendChild(prioritytitle);
-        prioritydetailcontainer.appendChild(prioritynode);
- */
-        /* info.appendChild(titlenode);
-        info.appendChild(descriptionnode);
-        info.appendChild(duedatenode);
-        info.appendChild(prioritynode); */
-
-      /*   info.appendChild(titledetailcontainer);
-        info.appendChild(descriptiondetailcontainer);
-        info.appendChild(duedatedetailcontainer);
-        info.appendChild(prioritydetailcontainer); */
 
         info.appendChild(titletitle);
         info.appendChild(titlenode);
