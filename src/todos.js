@@ -1,5 +1,6 @@
 import { format, parseISO } from "date-fns";
 
+//ToDo object holds the task information
 export class ToDo {
 
     static counter = 1;

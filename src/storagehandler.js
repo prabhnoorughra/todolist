@@ -2,8 +2,9 @@ import { Projects } from "./projects";
 import { List } from "./lists";
 import { ToDo } from "./todos";
 
-export function loadProjectsFromStorage() {
 
+//load Projects/Tasks from local storage if they exist, otherwise initialize Home project
+export function loadProjectsFromStorage() {
   const raw = localStorage.getItem('myProjects');
   if (!raw) {
     const projectlist = new Projects();
@@ -36,6 +37,7 @@ export function loadProjectsFromStorage() {
   return projectlist;
 }
 
+//Save all projects and tasks in each project to Local Memory
 export function saveToStorage(projectlist) {
     // save projectlist each time, rewriting previous saves with latest updated version
     console.log("saving!");

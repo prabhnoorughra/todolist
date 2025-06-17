@@ -2,7 +2,7 @@ import { List } from "./lists";
 import { ToDo } from "./todos";
 import { displayProjects, loadList } from "./DOM";
 
-
+//Projects object will hold all projects added by user
 export class Projects {
     constructor() {
         this.projects = [];
@@ -21,7 +21,6 @@ export class Projects {
                 break;
             }
         }
-
         displayProjects(this);
         loadList(this.projects[0], this);
     }

@@ -1,13 +1,10 @@
 import { ToDo } from "./todos";
-import { Projects } from "./projects";
 import { format, parseISO } from "date-fns";
 import { saveToStorage } from "./storagehandler";
 
-export function loadList(list, projects) { //ran to initialize and display between lists we have stored under projects
+export function loadList(list, projects) { //ran to initialize and display lists and projects sidebar
+    //displaying project sidebar with selected list marked active
     const projectNodes = document.querySelectorAll(".project");
-
-
-
     for(const projectNode of projectNodes) {
         if(projectNode.classList.contains(list.id)) {
             projectNode.classList.add("active");
@@ -17,26 +14,22 @@ export function loadList(list, projects) { //ran to initialize and display betwe
     }
 
 
-
+    //clearing out parent for list we are about to display
     const parent = document.querySelector(".todolistdisplay");
     parent.replaceChildren();
 
 
-     //intializing funcitonality for adding tasks to the list
+    //intializing funcitonality for adding tasks to the list, replacing the form node with an updated form
     const modal = document.querySelector("#taskmodal");
     const addTask = document.createElement("button");
     addTask.textContent = "Add Task!";
-
-
     const oldform = document.querySelector("#taskform");
     const form = oldform.cloneNode(true);
     oldform.replaceWith(form);
-
     const cancelBtn = document.querySelector("#canceltask");
-
     addTask.classList.add("addtask");
 
-    //showmodal
+    //show modal when add task is clicked
     addTask.addEventListener("click", () => {
         form.reset();
         modal.showModal();
@@ -47,7 +40,7 @@ export function loadList(list, projects) { //ran to initialize and display betwe
         modal.close();
     });
 
-    //handle submission
+    //handle submission of new task
     form.addEventListener("submit", (e) => {
         e.preventDefault();
         if(!form.checkValidity()) {
@@ -66,17 +59,16 @@ export function loadList(list, projects) { //ran to initialize and display betwe
     parentcontainer.appendChild(addTask);
 
 
-    //loading list
+    //displaying actual todo list
     const listarr = list.todolist;
     if(listarr.length != 0) {
         displayList(list, addTask, projects);
-    } else if(list.id === projects.projects[0].id) {
+    } else if(list.id === projects.projects[0].id) { //if Home Page is empty we do not let user Delete the list
         console.log("Home!");
         const home = document.createElement("div");
-        //home.textContent = "Home List";
         home.classList.add("homelist");
         parent.appendChild(home);
-    } else {
+    } else { //if list is empty we allow user to delete the list, which also moves us back to the Home List after
         const emptycontainer = document.createElement("div");
         emptycontainer.classList.add("emptycontainer");
         const empty = document.createElement("div");
@@ -86,28 +78,26 @@ export function loadList(list, projects) { //ran to initialize and display betwe
         const deleteBtn = document.createElement("button");
         deleteBtn.classList.add("emptydeletebtn");
         deleteBtn.textContent = "Delete Project";
+
         deleteBtn.addEventListener("click", () => {
             const projparent = document.querySelector(".projects");
             const projtodelete = document.querySelector("." + list.id);
             projparent.removeChild(projtodelete);
-
-            //need to remove it from projects obj then redisplay everything
             projects.deleteProject(list.id);
             saveToStorage(projects);
-            
         });
+
         emptycontainer.appendChild(empty);
         emptycontainer.appendChild(deleteBtn);
-
         parent.appendChild(emptycontainer);
     }
 }
 
-function displayList(list, addbtn, projects) {
+function displayList(list, addbtn, projects) { //display ToDo list items, with items having a checkbox and 3 buttons
     const parent = document.querySelector(".todolistdisplay");
     parent.replaceChildren();
     const listarr = list.todolist;
-    for(const item of listarr) {
+    for(const item of listarr) { //iterating over todo list to manage the buttons/display of each item
         const itemnode = document.createElement("div");
         itemnode.classList.add("task");
         if(item.completed) {
@@ -116,6 +106,7 @@ function displayList(list, addbtn, projects) {
             itemnode.classList.remove("completed");
         }
 
+        //managing display based on the items priority
         const prioritydiv = document.createElement("div");
         if(item.priority === "Low") {
             prioritydiv.classList.add("low");
@@ -131,6 +122,7 @@ function displayList(list, addbtn, projects) {
             prioritydiv.classList.add("high");
         }
 
+        //adding functionality to checkbox to allow users to mark a task as completed
         const completedDiv = document.createElement("div");
         completedDiv.classList.add("checkboxcontainer");
         const completedBox = document.createElement("input");
@@ -161,6 +153,7 @@ function displayList(list, addbtn, projects) {
             saveToStorage(projects);
         });
 
+        //creating the Task's actual display of the title and due date
         const title = document.createElement("div");
         title.classList.add("titletaskdisplay");
         title.textContent = item.title;
@@ -170,8 +163,9 @@ function displayList(list, addbtn, projects) {
         const rawdate = item.dueDate;
         const date = parseISO(rawdate);
         const pretty = format(date, 'MMMM d yyyy');
-        duedatenode.textContent = pretty; //new date formatting
+        duedatenode.textContent = pretty; //visually appealing date formatting
 
+        //allow users to delete a task
         const deleteTask = document.createElement("button");
         deleteTask.textContent = "Delete";
         deleteTask.addEventListener("click", () => {
@@ -180,21 +174,21 @@ function displayList(list, addbtn, projects) {
             loadList(list, projects);
         });
 
+        //intitializing unique modal/form for each task so users can edit the values of the task directly
         const modalcontainer = document.querySelector(".modalcontainer");
         modalcontainer.replaceChildren();
-
         const editTask = document.createElement("button");
         editTask.textContent = "Edit";
-        //make edit modal dialog and form
+        //allow users to edit a task
         editTask.addEventListener("click", () => {
             const newModal = makeEditForm(item, list, projects);
             //const modal = document.querySelector("#editmodal");
             newModal.showModal();
         });
 
+        //allow users to view the entire details of the task
         const detailsTask = document.createElement("button");
         detailsTask.textContent = "Details";
-        //pop up details of item as a modal
         detailsTask.addEventListener("click", () => {
             const modal = document.querySelector("#detailmodal");
             modal.replaceChildren();
@@ -222,6 +216,7 @@ function displayList(list, addbtn, projects) {
         itemnode.appendChild(duedatenode);
         itemnode.appendChild(buttoncontainer);
         parent.appendChild(itemnode);
+        //scroll into view the new task when added
         itemnode.scrollIntoView({ behavior: "auto", block: "nearest"});
     }
     parent.appendChild(addbtn);
@@ -229,10 +224,9 @@ function displayList(list, addbtn, projects) {
 
 
 
-export function displayProjects(projects) {
+export function displayProjects(projects) { //display the project sidebar and allow users to switch between projects with a click
     const parent = document.querySelector(".projects");
     parent.replaceChildren();
-    //parent.textContent = "Projects";
 
     for(const list of projects.projects) {
         const listNode = document.createElement("div");
@@ -240,9 +234,7 @@ export function displayProjects(projects) {
         listNode.classList.add("project");
         listNode.classList.add(list.id);
 
-
         listNode.addEventListener("click", () => {
-            console.log("no1");
             loadList(list, projects);
         });
 
@@ -251,7 +243,8 @@ export function displayProjects(projects) {
     }
 }
 
-
+//create the unique forms for editing a task, showing the current items values as already filled in
+//allowing users to edit the values directly
 function makeEditForm(item, list, projects) {
     const modalcontainer = document.querySelector(".modalcontainer");
     const modal = document.querySelector("#emptymodal");
@@ -293,5 +286,4 @@ function makeEditForm(item, list, projects) {
         saveToStorage(projects);
     });
     return newModal;
-
 }

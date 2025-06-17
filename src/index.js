@@ -7,22 +7,18 @@ import { loadProjectsFromStorage, saveToStorage } from "./storagehandler";
 
 
 
-console.log("Yo!");
+const projectlist = loadProjectsFromStorage(); 
 
-/* const defaultList = new List("Default");
-loadList(defaultList); */
 
-const projectlist = loadProjectsFromStorage(); //new
-//projectlist.addProject("Home");
-console.log(projectlist);
 displayProjects(projectlist);
-loadList(projectlist.projects[0], projectlist);
+loadList(projectlist.projects[0], projectlist); //Load home todo list
 
 const addProject = document.querySelector("#addproject");
 const dialog = document.querySelector("#projectmodal");
 const pform = document.querySelector("#projectform");
 const cancelButton = document.querySelector("#cancelproject");
 
+//button/form for add project modal
 addProject.addEventListener("click", () => {
     pform.reset();
     dialog.showModal();
@@ -44,9 +40,3 @@ pform.addEventListener("submit", (e) => {
     loadList(projectlist.projects[projectlist.projects.length - 1], projectlist);
     saveToStorage(projectlist);
 });
-
-
-
-
-/* projectlist.addProject("Home");
-projectlist.projects[1].addToList(new ToDo("Do homework", "please")); */

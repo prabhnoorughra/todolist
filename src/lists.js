@@ -1,3 +1,4 @@
+//List object will hold all tasks added by a user for a particular project
 export class List {
     static counter = 1;
 
